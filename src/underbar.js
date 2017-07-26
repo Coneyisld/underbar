@@ -73,6 +73,7 @@
     _.each(array, function(item, index) {
       if (item === target && result === -1) {
         result = index;
+        return result;
       }
     });
 
@@ -95,7 +96,7 @@
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
     return _.filter(collection, function(item) {
-      return !test(item)
+      return !test(item);
     });
 
   };
@@ -390,6 +391,8 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
+
+
   };
 
   // Zip together two or more arrays with elements of the same index
@@ -398,14 +401,27 @@
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
-
+    
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
   // The new array should contain all elements of the multidimensional array.
   //
   // Hint: Use Array.isArray to check if something is an array
-  _.flatten = function(nestedArray, result) {
+  _.flatten = function(nestedArray, result=[]) {
+        for(var i = 0; i < nestedArray.length; i++) {
+      var element = nestedArray[i];
+
+      if ( !Array.isArray(element) ) {
+        result.push(element);
+      }
+      
+      if ( Array.isArray(element) ) {
+        result.concat( _.flatten(element, result) );
+      }
+      
+    }
+    return result
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
